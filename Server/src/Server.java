@@ -10,48 +10,39 @@ import java.net.UnknownHostException;
 import java.io.PrintWriter;
 
 
-public class Server 
+public class Server
 {
-    private InetAddress localAddress;
-    private InetAddress serverAddress;
-    private ServerSocket socketServerInstance;
-    private Socket socketServer;
-    private BufferedReader in;
-    private PrintWriter out;
-    private String recvMessage;
+    private InetAddress _localAddress;
+    private InetAddress _serverAddress;
+    private BufferedReader _in;
+    private PrintWriter _out;
+    private String _recvMessage;
+    private int _numPort = 6667;
+    private int _nbrUser = 3;
+    protected ServerSocket _socketServerInstance;
+    protected Socket _socketServer;
+    protected int _nbrclient = 1;
     
-    Server(String statut)
+    Server(String s)
     {
-	System.out.println("Récup des adress local et serveur " + statut);
+	System.out.println("Récup des adress local et serveur " + s);
     }
-    void getAddr()
+    public Server()
     {
-	try 
-	{
-	    localAddress = InetAddress.getLocalHost();
-	    System.out.println("L'adresse locale est : "+localAddress); 
-	    
-	    serverAddress = InetAddress.getByName("www.siteduzero.com");
-	    System.out.println("L'adresse du serveur du site du zéro est : "+serverAddress);
-	}
-	catch(UnknownHostException e) 
-	{	
-	    e.printStackTrace();
-	}
+	// TODO Auto-generated constructor stub
     }
     void launchServer()
     {
 	try
 	{
-	    socketServerInstance = new ServerSocket(6667);
-	    System.out.println("Server is running listening on port ->  "+socketServerInstance.getLocalPort());
-	    socketServer = socketServerInstance.accept();
+	    _localAddress = InetAddress.getLocalHost();
+	    _socketServerInstance = new ServerSocket(_numPort, _nbrUser, _localAddress);
+	    Thread threadClient = new Thread(new MultiClient(_socketServer, _nbrclient, _socketServerInstance));
+	    System.out.println("Server is running listening on port ->  "+_socketServerInstance.getLocalPort());
+	    threadClient.start();
 	    System.out.println("A client just connected ");
-	    sendMessage("You are connected on the server using port -> " +socketServerInstance.getLocalPort());
-	    catchMessageToString();
-	    while(socketServer != null);
-//	    socketServerInstance.close();
-//	    socketServer.close();
+	    //sendMessage("You are connected on the server using port -> " +_socketServerInstance.getLocalPort());
+	    while(_socketServer != null);
 	}
 	catch (IOException e) 
 	{
@@ -60,16 +51,22 @@ public class Server
     }
     void sendMessage(String msg) throws IOException
     {
-	out = new PrintWriter(socketServer.getOutputStream());
-	out.println(msg);
-	out.flush();
+	_out = new PrintWriter(_socketServer.getOutputStream());
+	_out.println(msg);
+	_out.flush();
+    }
+    void sendMessage(String msg,Socket s) throws IOException
+    {
+	_out = new PrintWriter(s.getOutputStream());
+	_out.println(msg);
+	_out.flush();
     }
     String catchMessageToString() throws IOException
     {
-	in = new BufferedReader(new InputStreamReader(socketServer.getInputStream()));
-	recvMessage = in.readLine();
-	System.out.println(recvMessage);
+	_in = new BufferedReader(new InputStreamReader(_socketServer.getInputStream()));
+	_recvMessage = _in.readLine();
+	System.out.println(_recvMessage);
 	
-	return recvMessage;
+	return _recvMessage;
     }
 }

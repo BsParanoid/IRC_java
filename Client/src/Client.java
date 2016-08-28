@@ -9,21 +9,20 @@ import java.net.UnknownHostException;
 
 public class Client 
 {
-    private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
-    private String recvMessage;
+    private Socket _socket;
+    private BufferedReader _in;
+    private PrintWriter _out;
+    private String _recvMessage;
     
     void launch()
     {
     	try 
     	{		
-    	    socket = new Socket(InetAddress.getLocalHost(),6667);	
-    	    System.out.println("Waiting for server accpt connection");
+    	    _socket = new Socket(InetAddress.getLocalHost(),6667);	
+    	    System.out.println("Waiting for server accpt connection ->socket = "+_socket);
     	    catchMessageToString();
-    	    sendMessage("Hi server this is a client");
-    	    while (socket != null);
-//    	    socket.close();
+    	    while (_socket != null);
+    	    _socket.close();
     	}
     	catch(UnknownHostException e)
     	{	
@@ -36,16 +35,16 @@ public class Client
     }
     void sendMessage(String msg) throws IOException
     {
-	out = new PrintWriter(socket.getOutputStream());
-	out.println(msg);
-	out.flush();
+	_out = new PrintWriter(_socket.getOutputStream());
+	_out.println(msg);
+	_out.flush();
     }
     String catchMessageToString() throws IOException
     {
-	in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-	recvMessage = in.readLine();
-	System.out.println(recvMessage);
+	_in = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
+	_recvMessage = _in.readLine();
+	System.out.println(_recvMessage);
 	
-	return recvMessage;
+        return _recvMessage;
     }
 }
