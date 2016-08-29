@@ -7,20 +7,22 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client 
+public class Client
 {
     private Socket _socket;
     private BufferedReader _in;
     private PrintWriter _out;
-    private String _recvMessage;
+    private String _recvMessage = null;
     
     void launch()
     {
     	try 
     	{		
-    	    _socket = new Socket(InetAddress.getLocalHost(),6667);	
+    	    _socket = new Socket(InetAddress.getLocalHost(),6667);
     	    System.out.println("Waiting for server accpt connection ->socket = "+_socket);
-    	    catchMessageToString();
+    	    _in = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
+    	    Thread threadRecv = new Thread(new ThreadRecv(_in));
+    	    threadRecv.start();
     	    while (_socket != null);
     	    _socket.close();
     	}
@@ -39,12 +41,11 @@ public class Client
 	_out.println(msg);
 	_out.flush();
     }
-    String catchMessageToString() throws IOException
+    String catchMessageToString(BufferedReader in) throws IOException
     {
-	_in = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
-	_recvMessage = _in.readLine();
+	_recvMessage = in.readLine();
 	System.out.println(_recvMessage);
 	
-        return _recvMessage;
+	return _recvMessage;
     }
 }
