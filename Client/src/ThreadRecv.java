@@ -6,8 +6,8 @@ import java.net.Socket;
 public class ThreadRecv implements Runnable
 {
     private BufferedReader _in;
-    private String _recvMessage; //= null;
-    boolean vrai = true;
+    private String _recvMessage = null;
+    private boolean UntilFalse = true;
     
     Client client = new Client();
     
@@ -22,7 +22,7 @@ public class ThreadRecv implements Runnable
 	// TODO Auto-generated method stub
 	try
 	{
-	    while (vrai)
+	    while (UntilFalse)
 	    {
 		_recvMessage = _in.readLine();
 		if (_recvMessage != null)
@@ -31,7 +31,7 @@ public class ThreadRecv implements Runnable
 		}
 		else if (_recvMessage == null)
 		{
-		    vrai = false;
+		    UntilFalse = false;
 		}
 	    }
 	}

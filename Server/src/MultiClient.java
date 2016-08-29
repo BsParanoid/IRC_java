@@ -27,7 +27,7 @@ public class MultiClient implements Runnable
     	   while (true)
     	   {
     	       _socketServer = _socketServerInstance.accept();
-    	       server.sendMessage("Bonjour client ->"+_nbrclient+" "+_socketServer, _socketServer);
+    	       server.sendMessage("Hi client ->"+_nbrclient+" "+_socketServer, _socketServer);
     	       server.sendMessage("Bonjour client XXXXXXXXXXXXXXXXXXXX"+_nbrclient+" "+_socketServer, _socketServer);
     	       server.sendMessage("3 eme msg", _socketServer);
     	       System.out.println("Client nb  "+_nbrclient+ " is connected !");

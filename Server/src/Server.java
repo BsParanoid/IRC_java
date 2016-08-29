@@ -18,9 +18,9 @@ public class Server
     private String _recvMessage;
     private int _numPort = 6667;
     private int _nbrUser = 3;
+    protected int _nbrclient = 1;
     protected ServerSocket _socketServerInstance;
     protected Socket _socketServer;
-    protected int _nbrclient = 1;
     
     Server(String s)
     {
@@ -39,8 +39,6 @@ public class Server
 	    Thread threadClient = new Thread(new MultiClient(_socketServer, _nbrclient, _socketServerInstance));
 	    System.out.println("Server is running listening on port ->  "+_socketServerInstance.getLocalPort());
 	    threadClient.start();
-	    System.out.println("A client just connected ");
-	    //sendMessage("You are connected on the server using port -> " +_socketServerInstance.getLocalPort());
 	    while(_socketServer != null);
 	}
 	catch (IOException e) 
