@@ -5,6 +5,10 @@ import java.net.Socket;
 
 public class ThreadRecv implements Runnable
 {
+    /*
+     * This class implement an thread to read STDIN 
+     */
+    
     private BufferedReader _in;
     private String _recvMessage = null;
     private boolean UntilFalse = true;

@@ -9,6 +9,8 @@ public class ThreadRead implements Runnable
     private String _recvMessage = null;
     private boolean UntilFalse = true;
     
+    protected Cmd cmd = new Commandes();
+    
     public ThreadRead(BufferedReader in)
     {
 	// TODO Auto-generated constructor stub
@@ -23,11 +25,14 @@ public class ThreadRead implements Runnable
 	    while (UntilFalse)
 	    {
 		_recvMessage = _in.readLine();
+		cmd.pass(_recvMessage);
+		/*
 		if (_recvMessage != null)
 		{
 		    System.out.println(_recvMessage);
 		}
-		else if (_recvMessage == null)
+		*/
+		if (_recvMessage == null)
 		{
 		    UntilFalse = false;
 		}

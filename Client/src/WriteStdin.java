@@ -2,7 +2,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class WriteStdin implements Runnable
-{
+{   
     private Scanner _sc;
     private String _message;
     private PrintWriter _out;
