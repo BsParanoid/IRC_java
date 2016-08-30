@@ -23,6 +23,9 @@ public class Client
     	    _in = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
     	    Thread threadRecv = new Thread(new ThreadRecv(_in));
     	    threadRecv.start();
+    	    _out = new PrintWriter(_socket.getOutputStream());
+    	    Thread write = new Thread(new WriteStdin(_out));
+    	    write.start();
     	    while (_socket != null);
     	    _socket.close();
     	}

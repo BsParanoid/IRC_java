@@ -58,10 +58,9 @@ public class Server
 	_out.println(msg);
 	_out.flush();
     }
-    String catchMessageToString() throws IOException
+    String catchMessageToString(BufferedReader in) throws IOException
     {
-	_in = new BufferedReader(new InputStreamReader(_socketServer.getInputStream()));
-	_recvMessage = _in.readLine();
+	_recvMessage = in.readLine();
 	System.out.println(_recvMessage);
 	
 	return _recvMessage;

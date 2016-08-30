@@ -3,13 +3,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class ThreadRecv implements Runnable
+public class ThreadRead implements Runnable
 {
     private BufferedReader _in;
     private String _recvMessage = null;
     private boolean UntilFalse = true;
     
-    public ThreadRecv(BufferedReader in)
+    public ThreadRead(BufferedReader in)
     {
 	// TODO Auto-generated constructor stub
 	_in = in;
