@@ -1,6 +1,50 @@
 
 public class Commandes extends Server implements Cmd
 {
+    public void callAll(String buffer)
+    {
+	pass(buffer);
+	nick(buffer);
+	user(buffer);
+	user(buffer);
+	server(buffer);
+	opper(buffer);
+	quit(buffer);
+	squit(buffer);
+	join(buffer);
+	part(buffer);
+	mode(buffer);
+	topic(buffer);
+	names(buffer);
+	list(buffer);
+	invite(buffer);
+	kick(buffer);
+	version(buffer);
+	stats(buffer);
+	links(buffer);
+	time(buffer);
+	connect(buffer);
+	trace(buffer);
+	admin(buffer);
+	info(buffer);
+	privmsg(buffer);
+	notice(buffer);
+	who(buffer);
+	whois(buffer);
+	whowas(buffer);
+	kill(buffer);
+	ping(buffer);
+	pong(buffer);
+	error(buffer);
+	away(buffer);
+	rehash(buffer);
+	restart(buffer);
+	summon(buffer);
+	users(buffer);
+	wallops(buffer);
+	userhost(buffer);
+	ison(buffer);
+    }
     public void pass(String buffer)
     {
 	if (buffer.equals("/PASS"))

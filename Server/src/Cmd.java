@@ -1,6 +1,7 @@
 
 public interface Cmd
 {
+    public void callAll(String buffer);
     public void pass(String buffer);
     public void nick(String buffer);
     public void user(String buffer);

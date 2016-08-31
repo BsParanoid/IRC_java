@@ -26,7 +26,7 @@ public class ThreadRead implements Runnable
 	    while (UntilFalse)
 	    {
 		_recvMessage = _in.readLine();
-		cmd.pass(_recvMessage);
+		cmd.callAll(_recvMessage);
 		/*
 		if (_recvMessage != null)
 		{
