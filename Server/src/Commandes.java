@@ -1,11 +1,9 @@
 
 public class Commandes extends Server implements Cmd
 {
+    private String[] bsplit;
     public void callAll(String buffer)
     {
-	pass(buffer);
-	nick(buffer);
-	user(buffer);
 	user(buffer);
 	server(buffer);
 	opper(buffer);
@@ -45,18 +43,39 @@ public class Commandes extends Server implements Cmd
 	userhost(buffer);
 	ison(buffer);
     }
-    public void pass(String buffer)
+    public boolean pass(String buffer, String[] bpass)
     {
-	if (buffer.equals("/PASS"))
+	boolean value = false;
+	
+	bpass = buffer.split(" ");
+	if (buffer.length() < bpass[0].length()+1)
 	{
-	    System.out.println("commande /PASS");
+	    System.out.println("Please enter a password");
+	    value = true;
 	}
-    }
-    public void nick(String buffer)
-    {
-	if (buffer.equals("/NICK"))
+	else if (buffer.length() > bpass[0].length()+1)
 	{
-	    System.out.println("commande /NICK");
+	    if (bpass[0].equals("/PASS"))
+	    {
+		System.out.println("commande /PASS "+bpass[1]);
+		value = false;
+	    }
+	}
+	return value;
+    }
+    public void nick(String buffer, String[] bnick)
+    {
+	bnick = buffer.split(" ");
+	if (buffer.length() < bnick[0].length()+1)
+	{
+	    System.out.println("Please enter a nickname");
+	}
+	else if (buffer.length() > bnick[0].length()+1)
+	{
+	    if (bnick[0].equals("/NICK"))
+	    {
+		System.out.println("commande /NICK "+bnick[1]);
+	    }
 	}
     }
     public void user(String buffer)
@@ -324,5 +343,22 @@ public class Commandes extends Server implements Cmd
 	{
 	    System.out.println("commande /ISON");
 	}
+    }
+    @Override
+    public boolean authentification(String buffer)
+    {
+	// TODO Auto-generated method stub
+	boolean untilFalse = true;
+	boolean value = true;
+	
+	while (untilFalse)
+	{
+	    untilFalse = pass(buffer, bsplit);
+	    if (untilFalse == false)
+		value = false;
+	    if (untilFalse == true)
+		break;
+	}
+	return value;
     }
 }

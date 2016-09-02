@@ -9,6 +9,7 @@ public class ThreadRead implements Runnable
     private BufferedReader _in;
     private String _recvMessage = null;
     private boolean UntilFalse = true;
+    private boolean Isthatfalse = true;
     
     protected Cmd cmd = new Commandes();
     
@@ -26,6 +27,10 @@ public class ThreadRead implements Runnable
 	    while (UntilFalse)
 	    {
 		_recvMessage = _in.readLine();
+		if (Isthatfalse == true)
+		{
+		    Isthatfalse = cmd.authentification(_recvMessage);
+		}
 		cmd.callAll(_recvMessage);
 		/*
 		if (_recvMessage != null)

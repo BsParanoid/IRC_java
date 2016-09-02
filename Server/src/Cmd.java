@@ -1,9 +1,10 @@
 
 public interface Cmd
 {
+    public boolean authentification(String buffer);
     public void callAll(String buffer);
-    public void pass(String buffer);
-    public void nick(String buffer);
+    public boolean pass(String buffer, String[] bpass);
+    public void nick(String buffer, String[] bnick);
     public void user(String buffer);
     public void server(String buffer);
     public void opper(String buffer);
