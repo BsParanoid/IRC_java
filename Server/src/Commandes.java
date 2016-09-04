@@ -1,10 +1,10 @@
+import java.io.IOException;
 
 public class Commandes extends Server implements Cmd
 {
     private String[] bsplit;
     public void callAll(String buffer)
     {
-	user(buffer);
 	server(buffer);
 	opper(buffer);
 	quit(buffer);
@@ -48,7 +48,7 @@ public class Commandes extends Server implements Cmd
 	boolean value = false;
 	
 	bpass = buffer.split(" ");
-	if (buffer.length() < bpass[0].length()+1)
+	if (buffer.length() < bpass[0].length()+2)
 	{
 	    System.out.println("Please enter a password");
 	    value = true;
@@ -61,29 +61,51 @@ public class Commandes extends Server implements Cmd
 		value = false;
 	    }
 	}
-	return value;
+	return false;
     }
-    public void nick(String buffer, String[] bnick)
+    public boolean nick(String buffer, String[] bnick)
     {
+	boolean value = false;
+	
 	bnick = buffer.split(" ");
-	if (buffer.length() < bnick[0].length()+1)
+	if (buffer.length() < bnick[0].length()+2)
 	{
 	    System.out.println("Please enter a nickname");
+	    value = true;
 	}
 	else if (buffer.length() > bnick[0].length()+1)
 	{
 	    if (bnick[0].equals("/NICK"))
 	    {
 		System.out.println("commande /NICK "+bnick[1]);
+		value = false;
 	    }
+	    else
+		value = true;
 	}
+	return value;
     }
-    public void user(String buffer)
+    public boolean user(String buffer, String[] buser)
     {
-	if (buffer.equals("/USER"))
+	boolean value = false;
+	
+	buser = buffer.split(" ");
+	if (buffer.length() < buser[0].length()+2)
 	{
-	    System.out.println("commande /USER");
+	    System.out.println("Please enter a user");
+	    value = true;
 	}
+	else if (buffer.length() > buser[0].length()+1)
+	{
+	    if (buser[0].equals("/USER"))
+	    {
+		System.out.println("commande /USER "+buser[1]);
+		value = false;
+	    }
+	    else 
+		value = true;
+	}
+	return value;
     }
     public void server(String buffer)
     {
@@ -345,19 +367,44 @@ public class Commandes extends Server implements Cmd
 	}
     }
     @Override
-    public boolean authentification(String buffer)
+    public boolean authentificationNick(String buffer)
     {
 	// TODO Auto-generated method stub
-	boolean untilFalse = true;
+	boolean untilFalseNick = true;
 	boolean value = true;
 	
-	while (untilFalse)
+	while (untilFalseNick)
 	{
-	    untilFalse = pass(buffer, bsplit);
-	    if (untilFalse == false)
+	    untilFalseNick = nick(buffer, bsplit);
+	    if (untilFalseNick == false)
+	    {
 		value = false;
-	    if (untilFalse == true)
+	    }
+	    if (untilFalseNick == true)
+	    {
 		break;
+	    }
+	}
+	return value;
+    }
+    @Override
+    public boolean authentificationUser(String buffer)
+    {
+	// TODO Auto-generated method stub
+	boolean untilFalseUser = true;
+	boolean value = true;
+	
+	while (untilFalseUser)
+	{
+	    untilFalseUser = user(buffer, bsplit);
+	    if (untilFalseUser == false)
+	    {
+		value = false;
+	    }
+	    if (untilFalseUser == true)
+	    {
+		break;
+	    }
 	}
 	return value;
     }

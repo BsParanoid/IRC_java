@@ -30,8 +30,6 @@ public class MultiClient implements Runnable
     	   {
     	       _socketServer = _socketServerInstance.accept();
     	       server.sendMessage("Hi client ->"+_nbrclient+" "+_socketServer, _socketServer);
-    	       server.sendMessage("Bonjour client XXXXXXXXXXXXXXXXXXXX"+_nbrclient+" "+_socketServer, _socketServer);
-    	       server.sendMessage("3 eme msg", _socketServer);
     	       System.out.println("Client nb  "+_nbrclient+ " is connected !");
     	       _nbrclient++;
     	       _in = new BufferedReader(new InputStreamReader(_socketServer.getInputStream()));

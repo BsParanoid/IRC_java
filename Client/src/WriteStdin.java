@@ -20,7 +20,7 @@ public class WriteStdin implements Runnable
 	  
 	  while (true)
 	  {
-	      System.out.println("Votre message :");
+	      System.out.println("-> ");
 	      _message = _sc.nextLine();
 	      _out.println(_message);
 	      _out.flush();
